@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charles SHEN | Portfolio</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --primary: #003366;
+    --primary-light: #1a5276;
+    --accent: #c9a227;
+    --bg: #ffffff;
+    --bg-alt: #f8f9fa;
+    --text: #333333;
+    --text-light: #666666;
+    --border: #e0e0e0;
+    --shadow: 0 4px 20px rgba(0,51,102,0.08);
+  }
+  body {
+    font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+  }
+  .nav-logo {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.3s;
+    cursor: pointer;
+  }
+  .nav-links a:hover { color: var(--primary); }
+  .lang-switch {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .lang-switch:hover { background: var(--primary-light); }
+  .hero {
+    margin-top: 64px;
+    min-height: 92vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+    padding: 4rem 5%;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,51,102,0.05) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-inner {
+    max-width: 1200px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .hero-text h1 {
+    font-size: 2.8rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    word-wrap: break-word;
+  }
+  .hero-text .subtitle {
+    font-size: 1.15rem;
+    color: var(--primary-light);
+    margin-bottom: 1.25rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  .hero-text .tagline {
+    font-size: 1.05rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    max-width: 520px;
+    line-height: 1.7;
+  }
+  .hero-stats-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.25rem 0.75rem;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+  }
+  .stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,51,102,0.12);
+  }
+  .stat-card-num {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.35rem;
+    line-height: 1.2;
+  }
+  .stat-card-label {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+  }
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 12px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    cursor: pointer;
+    border: none;
+    display: inline-block;
+  }
+  .btn-primary {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0,51,102,0.3);
+  }
+  .btn-primary:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+  .btn-outline:hover {
+    background: var(--primary);
+    color: white;
+  }
+  .hero-photo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .photo-frame {
+    width: 300px;
+    height: 360px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    position: relative;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  }
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1rem;
+  }
+  .photo-placeholder .icon {
+    font-size: 4rem;
+    opacity: 0.3;
+    margin-bottom: 0.5rem;
+  }
+  section {
+    padding: 5rem 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-title {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
+  }
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px; left: 0;
+    width: 60px; height: 4px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .section-subtitle {
+    color: var(--text-light);
+    margin-top: 1.5rem;
+    margin-bottom: 3rem;
+    font-size: 1.05rem;
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  .about-text {
+    font-size: 1.05rem;
+    color: var(--text);
+    text-align: justify;
+  }
+  .about-highlights {
+    background: var(--bg-alt);
+    padding: 2rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary);
+  }
+  .about-highlights h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+  .highlight-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+  }
+  .highlight-icon {
+    width: 32px; height: 32px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+  .competencies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+  .comp-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .comp-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--primary);
+  }
+  .comp-card:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-4px);
+  }
+  .comp-card h3 {
+    color: var(--primary);
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+  }
+  .comp-card p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .comp-num {
+    position: absolute;
+    top: 1rem; right: 1.5rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: rgba(0,51,102,0.06);
+  }
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--primary), var(--primary-light));
+  }
+  .timeline-item {
+    position: relative;
+    padding-bottom: 2.5rem;
+    padding-left: 2rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2rem; top: 0.5rem;
+    width: 12px; height: 12px;
+    background: var(--primary);
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px var(--primary);
+    transform: translateX(-5px);
+  }
+  .timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .timeline-company-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.15rem;
+  }
+  .timeline-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-light);
+    margin-bottom: 0.35rem;
+  }
+  .timeline-meta {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 0.75rem;
+  }
+  .timeline-date {
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 600;
+    background: rgba(201,162,39,0.1);
+    padding: 2px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .timeline-bullets {
+    list-style: none;
+  }
+  .timeline-bullets li {
+    position: relative;
+    padding-left: 1.2rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+  .timeline-bullets li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: bold;
+  }
+  .bio-section {
+    background: var(--bg-alt);
+  }
+  .bio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  .bio-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: var(--shadow);
+  }
+  .bio-card h3 {
+    color: var(--primary);
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--border);
+  }
+  .impact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .impact-box {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    border-radius: 14px;
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,51,102,0.25);
+    transition: all 0.3s;
+  }
+  .impact-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,51,102,0.35);
+  }
+  .impact-num {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    line-height: 1.2;
+  }
+  .impact-label {
+    font-size: 0.9rem;
+    opacity: 0.95;
+    line-height: 1.4;
+  }
+  .bio-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .bio-feature {
+    background: white;
+    padding: 1.25rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .bio-feature h4 {
+    color: var(--primary);
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+  .bio-feature p {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  .contact-section {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    text-align: center;
+    padding: 4rem 5%;
+  }
+  .contact-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .contact-section p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+  }
+  .contact-grid {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1rem;
+  }
+  .contact-item a {
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s;
+  }
+  .contact-item a:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+  }
+  .contact-icon {
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+  }
+  footer {
+    background: #001a33;
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.85rem;
+  }
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
+    .hero-text .tagline { margin: 0 auto 2rem; }
+    .hero-stats-cards { grid-template-columns: repeat(2, 1fr); }
+    .hero-btns { justify-content: center; }
+    .about-grid { grid-template-columns: 1fr; }
+    .bio-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .timeline-header { flex-direction: column; }
+    .photo-frame { width: 260px; height: 300px; }
+  }
+  @media (max-width: 500px) {
+    .hero-text h1 { font-size: 2.2rem; }
+    .hero-stats-cards { gap: 0.75rem; }
+    .stat-card { padding: 1rem 0.5rem; }
+    .stat-card-num { font-size: 1.3rem; }
+    .stat-card-label { font-size: 0.7rem; }
+    .impact-num { font-size: 1.6rem; }
+    .timeline-company-name { font-size: 1.05rem; }
+  }
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">CHARLES SHEN</div>
+  <div class="nav-links">
+    <a onclick="scrollToSection('about')" data-en="About" data-zh="关于">About</a>
+    <a onclick="scrollToSection('competencies')" data-en="Competencies" data-zh="核心竞争力">Competencies</a>
+    <a onclick="scrollToSection('experience')" data-en="Experience" data-zh="经历">Experience</a>
+    <a onclick="scrollToSection('bio')" data-en="Bio" data-zh="简介">Bio</a>
+    <a onclick="scrollToSection('contact')" data-en="Contact" data-zh="联系">Contact</a>
+    <button class="lang-switch" onclick="toggleLang()" id="langBtn">中文</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <h1 data-en="Charles SHEN" data-zh="Charles Shen">Charles SHEN</h1>
+      <div class="subtitle" data-en="Regional Director of Talent Management & Learning | Corporate Academy Architect | Business-Driven L&D Leader" data-zh="中国区人才管理与学习总监 | 企业大学搭建专家 | 业务驱动型 L&D 领导者">Regional Director of Talent Management & Learning | Corporate Academy Architect | Business-Driven L&D Leader</div>
+      <div class="tagline" data-en="20+ years transforming learning functions into profit centers across 7 industries. Multilingual. Multicultural. Multiplying impact." data-zh="20+ 年横跨七个行业，将人才发展部门转化为利润中心。多语言、跨文化、倍增影响力。">20+ years transforming learning functions into profit centers across 7 industries. Multilingual. Multicultural. Multiplying impact.</div>
+
+      <div class="hero-stats-cards">
+        <div class="stat-card">
+          <div class="stat-card-num">20+</div>
+          <div class="stat-card-label" data-en="Years Experience" data-zh="年相关资历">Years Experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-num">10,000+</div>
+          <div class="stat-card-label" data-en="People Trained" data-zh="受训人次">People Trained</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-num">7</div>
+          <div class="stat-card-label" data-en="Industries Covered" data-zh="个行业覆盖">Industries Covered</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-num">4</div>
+          <div class="stat-card-label" data-en="Languages" data-zh="精通四种语言">Languages</div>
+        </div>
+      </div>
+
+      <div class="hero-btns">
+        <a href="#contact" class="btn btn-primary" data-en="Get In Touch" data-zh="联系我">Get In Touch</a>
+        <a href="#experience" class="btn btn-outline" data-en="View Experience" data-zh="查看经历">View Experience</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <div class="photo-frame">
+        <img src="charles-photo.png" alt="Charles SHEN" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=photo-placeholder><div class=icon>👤</div><div>Your Photo Here</div></div>';">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <h2 class="section-title" data-en="Executive Summary" data-zh="个人摘要">Executive Summary</h2>
+  <p class="section-subtitle" data-en="The story behind the numbers" data-zh="数字背后的故事">The story behind the numbers</p>
+  <div class="about-grid">
+    <div class="about-text" data-en="Visionary APAC/Global Learning Leader with 20+ years of experience designing and scaling corporate academies, leadership development frameworks, and talent systems across various industries—luxury retail, hospitality, healthcare, education, engineering consulting, MICE, high-tech manufacturing, and corporate services. Uniquely combines deep L&D expertise with 3+ years of P&L-driven Sales & Marketing leadership (managing CNY 200M+ annual revenue), enabling a rare ability to translate people strategy into measurable business outcomes. Recognized for transforming learning functions into profit centers and building culturally adaptable training ecosystems that serve 3,000–10,000+ employees across China, APAC, and international markets. Canadian-educated, multilingual (4 languages), and a regular speaker for AmCham Shanghai and Canadian Chamber of Commerce." data-zh="拥有 20+ 年亚太区及全球人才与学习发展经验，横跨奢侈品零售、酒店、医疗、教育、工程咨询、MICE、高科技制造及企业服务八个行业，多次从 0 到 1 搭建企业大学、胜任力框架与领导力梯队。兼具 3 年以上 P&L 导向的销售与市场运营总监经历（年管理营收 2 亿+人民币），具备将人才战略转化为可衡量业务成果的稀缺能力。在多门店、面向消费者的组织中成果尤为突出——设计店长/门店领导力项目、胜任力驱动的 PLP 个人学习计划及全国培训体系，有效提升 NPS、留存率与销售 KPI。服务 3,000–10,000+ 员工规模。加拿大教育背景，精通四门语言，美商会、加商会常驻讲师。">
+      Visionary APAC/Global Learning Leader with 20+ years of experience designing and scaling corporate academies, leadership development frameworks, and talent systems across various industries—luxury retail, hospitality, healthcare, education, engineering consulting, MICE, high-tech manufacturing, and corporate services. Uniquely combines deep L&D expertise with 3+ years of P&L-driven Sales & Marketing leadership (managing CNY 200M+ annual revenue), enabling a rare ability to translate people strategy into measurable business outcomes. Recognized for transforming learning functions into profit centers and building culturally adaptable training ecosystems that serve 3,000–10,000+ employees across China, APAC, and international markets. Canadian-educated, multilingual (4 languages), and a regular speaker for AmCham Shanghai and Canadian Chamber of Commerce.
+    </div>
+    <div class="about-highlights">
+      <h3 data-en="Quick Facts" data-zh="核心亮点">Quick Facts</h3>
+      <div class="highlight-item">
+        <div class="highlight-icon">🎓</div>
+        <span data-en="B.A. Concordia University, Canada" data-zh="Concordia 大学学士，加拿大">B.A. Concordia University, Canada</span>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">🌐</div>
+        <span data-en="4 Languages: EN / CN / Cantonese / FR" data-zh="四门语言：英/普/粤/法">4 Languages: EN / CN / Cantonese / FR</span>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">🏢</div>
+        <span data-en="4 Academies Built from 0-to-1" data-zh="4 家企业大学从 0 到 1 搭建">4 Academies Built from 0-to-1</span>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">💼</div>
+        <span data-en="3+ Years P&L Sales Leadership" data-zh="3+ 年 P&L 销售管理">3+ Years P&L Sales Leadership</span>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">📍</div>
+        <span data-en="Shanghai + 6 Cities Coverage" data-zh="上海 + 6 城覆盖">Shanghai + 6 Cities Coverage</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="competencies" style="background:var(--bg-alt);">
+  <h2 class="section-title" data-en="Key Competencies" data-zh="核心竞争力">Key Competencies</h2>
+  <p class="section-subtitle" data-en="What sets Charles apart" data-zh="Charles 的独特优势">What sets Charles apart</p>
+  <div class="competencies-grid">
+    <div class="comp-card">
+      <span class="comp-num">01</span>
+      <h3 data-en="0-to-1 Corporate Academy Builder" data-zh="0 到 1 企业大学搭建者">0-to-1 Corporate Academy Builder</h3>
+      <p data-en="Established Jiahui Learning Academy, Atlantis Sanya Academy, Tiffany China L&D System, and Hyatt China Training Academy from the ground up. Implemented competency-driven frameworks that directly support HR strategy and drive business results." data-zh="从零创建嘉会学院、亚特兰蒂斯三亚学院、Tiffany 中国培训体系、凯悦中国培训学院。搭建胜任力驱动框架，直接支撑 HR 战略并推动业务结果。">Established Jiahui Learning Academy, Atlantis Sanya Academy, Tiffany China L&D System, and Hyatt China Training Academy from the ground up. Implemented competency-driven frameworks that directly support HR strategy and drive business results.</p>
+    </div>
+    <div class="comp-card">
+      <span class="comp-num">02</span>
+      <h3 data-en="Training = Revenue & ROI" data-zh="培训 = 营收与 ROI 整合">Training = Revenue & ROI</h3>
+      <p data-en="Linked training outcomes to business KPIs: >13% referral revenue growth (WSE), CNY 1M+ annual ROI from Store Manager Excellence Program, and CNY 200M+ sales portfolio at 1000Meetings. Converts talent development into profit centers." data-zh="培训成果与业务 KPI 深度绑定：WSE 内推销售增长 >13%；店长卓越项目年 ROI 100 万+；1000Meetings 年管理销售规模 2 亿+。将人才发展部门转化为利润中心。">Linked training outcomes to business KPIs: >13% referral revenue growth (WSE), CNY 1M+ annual ROI from Store Manager Excellence Program, and CNY 200M+ sales portfolio at 1000Meetings. Converts talent development into profit centers.</p>
+    </div>
+    <div class="comp-card">
+      <span class="comp-num">03</span>
+      <h3 data-en="Global & Multicultural Leadership" data-zh="全球与跨文化领导力">Global & Multicultural Leadership</h3>
+      <p data-en="Led cross-border projects across China, APAC, Canada, Europe, and Americas. Managed diverse teams of 7–35 professionals. Fluent in English, Mandarin, Cantonese, and French. Canadian passport holder with deep East-West cultural fluency." data-zh="主导大型跨境项目，覆盖中国、亚太、加拿大、欧洲及美洲。直接管理 7–35 人多元文化团队。精通英语、普通话、粤语、法语。加拿大护照持有者，深谙东西方文化融合。">Led cross-border projects across China, APAC, Canada, Europe, and Americas. Managed diverse teams of 7–35 professionals. Fluent in English, Mandarin, Cantonese, and French. Canadian passport holder with deep East-West cultural fluency.</p>
+    </div>
+    <div class="comp-card">
+      <span class="comp-num">04</span>
+      <h3 data-en="Innovation & Digital Learning" data-zh="创新与数字化学习">Innovation & Digital Learning</h3>
+      <p data-en="Championed digital and blended learning ecosystems (Cornerstone, Oracle HCM, Workday, SuccessFactors). Pioneered AI-assisted learning design and multimedia training solutions for thousands of learners." data-zh="推动数字化与混合式学习生态（Cornerstone、Oracle HCM、Workday、SuccessFactors）。率先应用 AI 辅助课程设计与多媒体培训方案，服务数千名学员。">Championed digital and blended learning ecosystems (Cornerstone, Oracle HCM, Workday, SuccessFactors). Pioneered AI-assisted learning design and multimedia training solutions for thousands of learners.</p>
+    </div>
+    <div class="comp-card">
+      <span class="comp-num">05</span>
+      <h3 data-en="Cross-Industry Versatility" data-zh="跨行业经验">Cross-Industry Versatility</h3>
+      <p data-en="End-to-end project leadership across 7 sectors: luxury retail (Tiffany), hospitality (Hyatt, Atlantis), healthcare (Jiahui/MGH), education (Wall Street English), engineering (SNC-Lavalin), MICE (1000Meetings), and corporate services." data-zh="端到端项目领导力覆盖 7 个行业：奢侈品零售（Tiffany）、酒店（凯悦、亚特兰蒂斯）、医疗（嘉会/麻省总医院）、教育（华尔街英语）、工程（SNC-Lavalin）、会展（1000Meetings）、企业服务。">End-to-end project leadership across 7 sectors: luxury retail (Tiffany), hospitality (Hyatt, Atlantis), healthcare (Jiahui/MGH), education (Wall Street English), engineering (SNC-Lavalin), MICE (1000Meetings), and corporate services.</p>
+    </div>
+    <div class="comp-card">
+      <span class="comp-num">06</span>
+      <h3 data-en="One-Man-Army Execution" data-zh="独当一面的执行力">One-Man-Army Execution</h3>
+      <p data-en="Full-cycle ownership from needs analysis and competency mapping to curriculum design, delivery, and ROI measurement. Proven at organizations ranging from 2,500 to 10,000+ employees." data-zh="全流程项目主导——从需求分析、胜任力建模、课程设计、交付到 ROI 衡量。服务对象从 2,500 人到 10,000+ 员工规模均有验证。">Full-cycle ownership from needs analysis and competency mapping to curriculum design, delivery, and ROI measurement. Proven at organizations ranging from 2,500 to 10,000+ employees.</p>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <h2 class="section-title" data-en="Professional Experience" data-zh="工作经历">Professional Experience</h2>
+  <p class="section-subtitle" data-en="A track record of building, leading, and delivering" data-zh="搭建、领导、交付的完整轨迹">A track record of building, leading, and delivering</p>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-header">
+        <div>
+          <div class="timeline-company-name" data-en="Coherent China" data-zh="高意光通讯 Coherent China">Coherent China</div>
+          <div class="timeline-title" data-en="Regional Director, Talent Management & Learning" data-zh="中国区人才管理与学习总监">Regional Director, Talent Management & Learning</div>
+          <div class="timeline-meta">Shanghai + 6 Cities | 10,000+ Employees</div>
+        </div>
+        <span class="timeline-date">2025.12 – 2026.05</span>
+      </div>
+      <ul class="timeline-bullets">
+        <li data-en="Built and launched the corporate university product catalog, structuring the China Leadership Academy full curriculum portfolio from foundational to advanced leadership levels in a post-M&A matrix organization." data-zh="打造并发布企业大学产品目录，构建中国领导力学院从基础到高阶的完整课程体系，在并购整合后的矩阵型组织中落地">Built and launched the corporate university product catalog, structuring the China Leadership Academy full curriculum portfolio from foundational to advanced leadership levels in a post-M&A matrix organization.</li>
+        <li data-en="Established a closed-loop system linking training programs, talent development, and competency frameworks—integrating learning paths, IDPs, and capability gaps into one continuous employee development cycle." data-zh="建立培训+人才发展+胜任力三位一体的闭环系统—整合学习路径、IDP 与能力差距，形成一体化员工发展循环">Established a closed-loop system linking training programs, talent development, and competency frameworks—integrating learning paths, IDPs, and capability gaps into one continuous employee development cycle.</li>
+        <li data-en="Drove talent engagement, retention, and succession planning via Talent Reviews and Individual Development Plans (IDPs), partnering with HRBPs and business leaders to identify and grow high-potential talent." data-zh="制定区域人才敬业、留存、继任策略；协同 HRBP 通过人才盘点与 IDP 识别高潜并培养未来领导者">Drove talent engagement, retention, and succession planning via Talent Reviews and Individual Development Plans (IDPs), partnering with HRBPs and business leaders to identify and grow high-potential talent.</li>
+        <li data-en="Acted as regional TM&L liaison; translated OTR/AOP strategic outputs into China learning priorities; built HR data fluency to improve workforce decision-making." data-zh="担任区域 TM&L 接口人；将 OTR/AOP 战略输出转化为年度学习规划；提升 HR 数据决策能力">Acted as regional TM&L liaison; translated OTR/AOP strategic outputs into China learning priorities; built HR data fluency to improve workforce decision-making.</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-header">
+        <div>
+          <div class="timeline-company-name" data-en="1000Meetings" data-zh="百会通 One Thousand Meetings">1000Meetings</div>
+          <div class="timeline-title" data-en="Director of Sales & Marketing, Greater China + Europe + Americas" data-zh="大中华区 + 欧美销售与市场总监">Director of Sales & Marketing, Greater China + Europe + Americas</div>
+          <div class="timeline-meta">MICE Venue Sourcing | Team of 15 | CNY 200M+ Annual Sales Revenue</div>
+        </div>
+        <span class="timeline-date">2022.07 – 2025.09</span>
+      </div>
+      <ul class="timeline-bullets">
+        <li data-en="Drove global business growth by integrating client resources and expertise from China, Singapore, and international markets, delivering value-rich MICE solutions for regional and global clients." data-zh="整合中国、新加坡及欧洲以及北美客户，推动全球 MICE 业务增长，为区域及全球客户提供高价值解决方案">Drove global business growth by integrating client resources and expertise from China, Singapore, and international markets, delivering value-rich MICE solutions for regional and global clients.</li>
+        <li data-en="Orchestrated sales team expansion and designed aggressive incentive programs, leading to high performance across the department and improved forecast accuracy through omnichannel annual planning." data-zh="搭建销售团队扩张与激励体系；主导全渠道年度战略规划，提升预测准确性与可持续增长">Orchestrated sales team expansion and designed aggressive incentive programs, leading to high performance across the department and improved forecast accuracy through omnichannel annual planning.</li>
+        <li data-en="Implemented CRM solutions to build high-trust relationships with key accounts, enhancing client retention and satisfaction." data-zh="落地 CRM 强化大客户留存与满意度；每年在中新两地策划 4 场大型营销 showcase，显著提升品牌声量">Implemented CRM solutions to build high-trust relationships with key accounts, enhancing client retention and satisfaction.</li>
+        <li data-en="Designed and produced major marketing showcase events in China and Singapore 4 times per year, substantially driving revenue and amplifying brand presence across the APAC region." data-zh="每年在中新两地策划 4 场大型营销 showcase，显著提升品牌声量">Designed and produced major marketing showcase events in China and Singapore 4 times per year, substantially driving revenue and amplifying brand presence across the APAC region.</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-header">
+        <div>
+          <div class="timeline-company-name" data-en="Jiahui International Hospital (MGH Affiliate)" data-zh="嘉汇医院（哈佛医学院和麻省总医院合作）">Jiahui International Hospital (MGH Affiliate)</div>
+          <div class="timeline-title" data-en="Corporate Director of Learning & Development" data-zh="学习与发展总监">Corporate Director of Learning & Development</div>
+          <div class="timeline-meta">Budget CNY 2M | 2,500 Employees</div>
+        </div>
+        <span class="timeline-date">2021.08 – 2022.06</span>
+      </div>
+      <ul class="timeline-bullets">
+        <li data-en="Founded the Jiahui Learning Academy from scratch—establishing Service Academy, Nursing, and Physician Learning Systems with competency-linked PLPs and digital SOP libraries." data-zh="从 0 创建嘉会学院：服务、护理、医师三大体系，胜任力 PLP + 数字化 SOP 课程库">Founded the Jiahui Learning Academy from scratch—establishing Service Academy, Nursing, and Physician Learning Systems with competency-linked PLPs and digital SOP libraries.</li>
+        <li data-en="Pioneered blended learning initiatives (offline + digital), significantly enhancing accessibility and engagement across all employee levels." data-zh="推动混合式学习（线下 + 线上），显著提升全层级员工的学习可及性与参与度">Pioneered blended learning initiatives (offline + digital), significantly enhancing accessibility and engagement across all employee levels.</li>
+        <li data-en="Played a key role in helping the institution achieve prestigious JCI Accreditation—the highest international standard for hospital care and safety." data-zh="主导推动 JCI 国际认证——医院护理与安全的最高国际标准">Played a key role in helping the institution achieve prestigious JCI Accreditation—the highest international standard for hospital care and safety.</li>
+        <li data-en="Strategic VIP Collaboration: Partnered with the hospital's VIP Center to deliver personalized service training, boosting client satisfaction and generating additional revenue streams." data-zh="VIP 战略合作：联合医院 VIP 中心定制个性化服务培训，提升客户体验并创造额外营收流">Strategic VIP Collaboration: Partnered with the hospital's VIP Center to deliver personalized service training, boosting client satisfaction and generating additional revenue streams.</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-header">
+        <div>
+          <div class="timeline-company-name" data-en="Wall Street English China" data-zh="华尔街英语中国 Wall Street English">Wall Street English China</div>
+          <div class="timeline-title" data-en="University Dean + Head of Talent Development" data-zh="企业大学院长 + 人才发展负责人">University Dean + Head of Talent Development</div>
+          <div class="timeline-meta">76 Centers | 3,500 Employees | 35 Trainers | Budget CNY 1M</div>
+        </div>
+        <span class="timeline-date">2019.01 – 2021.08</span>
+      </div>
+      <ul class="timeline-bullets">
+        <li data-en="Revenue Impact: Developed and delivered Internal Referral Sales training for Chinese and Foreign teachers. Result: record-breaking referral sales leads in WSE China history, driving >13% revenue increase." data-zh="营收影响：开发并交付中外教内推销售培训，创 WSE 中国区历史最高内推纪录，营收增长 >13%">Revenue Impact: Developed and delivered Internal Referral Sales training for Chinese and Foreign teachers. Result: record-breaking referral sales leads in WSE China history, driving >13% revenue increase.</li>
+        <li data-en="People & Succession: Conducted HiPo talent inventory across all departments using performance reviews, competency evaluations, and behavioral assessments. Designed personalized IDPs with mentoring support." data-zh="人才与继任：通过绩效+胜任力+行为评估进行全部门高潜盘点；设计个性化 IDP（培训+在岗+导师）">People & Succession: Conducted HiPo talent inventory across all departments using performance reviews, competency evaluations, and behavioral assessments. Designed personalized IDPs with mentoring support.</li>
+        <li data-en="Store Manager Excellence Program: Quarterly 4.5-day blended program for 100+ participants; tracked via KPI/NPS/retention metrics, delivering CNY 1M+ annual ROI." data-zh="店长卓越项目：季度 4.5 天混合式培训，100+ 学员 KPI/NPS/留存追踪，年 ROI 100 万+">Store Manager Excellence Program: Quarterly 4.5-day blended program for 100+ participants; tracked via KPI/NPS/retention metrics, delivering CNY 1M+ annual ROI.</li>
+        <li data-en="Change Management: Revamped new employee onboarding into a 'WOW' experience (evaluation >95% satisfaction). Led foreign teacher retention reform, successfully negotiating salary increases of RMB 3,000 above industry average." data-zh="变革管理：重塑入职 WOW 体验（满意度 >95%）主导外教留存改革，成功争取涨薪 3,000 元/月，高于行业均值">Change Management: Revamped new employee onboarding into a 'WOW' experience (evaluation >95% satisfaction). Led foreign teacher retention reform, successfully negotiating salary increases of RMB 3,000 above industry average.</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-header">
+        <div>
+          <div class="timeline-company-name" data-en="Atlantis Sanya, Kerzner International" data-zh="亚特兰蒂斯度假酒店 Atlantis Sanya, Kerzner International">Atlantis Sanya, Kerzner International</div>
+          <div class="timeline-title" data-en="Director of Learning & Development" data-zh="学习与发展总监">Director of Learning & Development</div>
+          <div class="timeline-meta">Team of 10 | 3,500 Employees</div>
+        </div>
+        <span class="timeline-date">2017.10 – 2019.01</span>
+      </div>
+      <ul class="timeline-bullets">
+        <li data-en="Led 0-to-1 academy creation for China's first Atlantis resort (1,314 rooms, 21 F&B outlets, Waterpark, Aquarium, Spa)." data-zh="主导 0-to-1 学院搭建；统筹水世界、水族馆、21 家餐饮、1,314 间客房等全部门 Trial Run 酒店模拟运营培训">Led 0-to-1 academy creation for China's first Atlantis resort (1,314 rooms, 21 F&B outlets, Waterpark, Aquarium, Spa).</li>
+        <li data-en="Designed and monitored hotel simulation programs (Trial Run) across all major departments pre-opening." data-zh="设计管培生、导师制、交叉培训、Fast Track 梯队项目，与胜任力深度挂钩">Designed and monitored hotel simulation programs (Trial Run) across all major departments pre-opening.</li>
+        <li data-en="Built Management Trainee programs, Mentoring programs, cross-training, and internal Fast Track pipelines linked to individual competencies." data-zh="设计管培生、导师制、交叉培训、Fast Track 梯队项目，与胜任力深度挂钩">Built Management Trainee programs, Mentoring programs, cross-training, and internal Fast Track pipelines linked to individual competencies.</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-header">
+        <div>
+          <div class="timeline-company-name" data-en="Tiffany & Co., China" data-zh="蒂芙尼 Tiffany & Co., China">Tiffany & Co., China</div>
+          <div class="timeline-title" data-en="National Head of Learning & Development" data-zh="全国学习与发展负责人">National Head of Learning & Development</div>
+          <div class="timeline-meta">30 Stores | Budget CNY 1M | Reported to MD</div>
+        </div>
+        <span class="timeline-date">2015.08 – 2017.10</span>
+      </div>
+      <ul class="timeline-bullets">
+        <li data-en="Owned full-cycle national training: induction, new store openings, sales & service, product knowledge, clienteling, and quarterly leadership programs for store managers and regional directors." data-zh="负责全国产品知识、销售技巧、高珠活动培训及店长/区经季度领导力项目">Owned full-cycle national training: induction, new store openings, sales & service, product knowledge, clienteling, and quarterly leadership programs for store managers and regional directors.</li>
+        <li data-en="Invented monthly training calendar and newsletter—adopted globally by Tiffany Education headquarters." data-zh="首创月度培训日历与 Newsletter，被全球 Education 总部采纳并在全球持续推广">Invented monthly training calendar and newsletter—adopted globally by Tiffany Education headquarters.</li>
+        <li data-en="Designed High Jewelry training programs with incentive indices; 2016 event performance lifted by 15%." data-zh="高珠培训 + 激励指标设计，2016 年活动业绩提升 15%">Designed High Jewelry training programs with incentive indices; 2016 event performance lifted by 15%.</li>
+        <li data-en="Directed Mystery Shop Programs and NPS analysis with Sales; collaborated with Merchandising and Marketing to align training with local product focus and consumer insights." data-zh="主导 Mystery Shop 与 NPS 闭环分析；联合商品部与市场部，将培训与本地产品策略及消费者洞察对齐">Directed Mystery Shop Programs and NPS analysis with Sales; collaborated with Merchandising and Marketing to align training with local product focus and consumer insights.</li>
+        <li data-en="Train-the-Trainer model: external foundation + internal customization—deployed ~20% of budget while maximizing impact." data-zh="TTT 模式：外部打基础、内部定制交付——年预算通常仅花 20%，效果最大化">Train-the-Trainer model: external foundation + internal customization—deployed ~20% of budget while maximizing impact.</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-header">
+        <div>
+          <div class="timeline-company-name" data-en="Hyatt Hotels Corporation" data-zh="凯悦集团 Hyatt Hotels Corporation">Hyatt Hotels Corporation</div>
+          <div class="timeline-title" data-en="Director of L&D" data-zh="学习与发展总监">Director of L&D</div>
+          <div class="timeline-meta">8 Properties | 6 Pre-openings / Taskforces</div>
+        </div>
+        <span class="timeline-date">2008.01 – 2015.07</span>
+      </div>
+      <ul class="timeline-bullets">
+        <li data-en="Rolled out Training Academy with PLPs—250+ topics for frontline, 400+ for managers—linked to competencies and performance reviews." data-zh="推广 Training Academy + PLP：一线 250+ 课程、经理 400+ 课程，与胜任力及绩效联动">Rolled out Training Academy with PLPs—250+ topics for frontline, 400+ for managers—linked to competencies and performance reviews.</li>
+        <li data-en="Led Innovation and Change training programs for property GMs and Senior Management." data-zh="为各酒店总经理及高层管理人员主导开展创新与变革培训项目">Led Innovation and Change training programs for property GMs and Senior Management.</li>
+        <li data-en="Recruited, managed, and mentored Management Trainees and Corporate Trainees; organized hospitality school partnerships." data-zh="负责管理培训生及集团管培生的招聘、管理与带教工作；搭建维护院校校企合作关系">Recruited, managed, and mentored Management Trainees and Corporate Trainees; organized hospitality school partnerships.</li>
+        <li data-en="Assisting Hyatt Group with corporate culture transformation and implementation post-IPO." data-zh="协助凯悦集团上市会后，企业文化转型和落地">Assisting Hyatt Group with corporate culture transformation and implementation post-IPO.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="bio" class="bio-section">
+  <h2 class="section-title" data-en="Professional Profile" data-zh="专业简介">Professional Profile</h2>
+  <p class="section-subtitle" data-en="The numbers that tell the story" data-zh="用数字说话">The numbers that tell the story</p>
+  <div class="bio-grid">
+    <div>
+      <h3 style="color:var(--primary);margin-bottom:1.5rem;font-size:1.3rem;" data-en="Impact at a Glance" data-zh="核心战绩">Impact at a Glance</h3>
+      <div class="impact-grid">
+        <div class="impact-box">
+          <div class="impact-num" data-en="50K+" data-zh="5万+">50K+</div>
+          <div class="impact-label" data-en="Training + Coaching Hours" data-zh="培训与教练时长">Training + Coaching Hours</div>
+        </div>
+        <div class="impact-box">
+          <div class="impact-num" data-en="10K+" data-zh="1万+">10K+</div>
+          <div class="impact-label" data-en="Participants Trained" data-zh="受训人数">Participants Trained</div>
+        </div>
+        <div class="impact-box">
+          <div class="impact-num" data-en="200M+" data-zh="¥2亿+">200M+</div>
+          <div class="impact-label" data-en="CNY Revenue Managed" data-zh="年营收管理">CNY Revenue Managed</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3 style="color:var(--primary);margin-bottom:1.5rem;font-size:1.3rem;" data-en="6 Key Advantages" data-zh="6 大核心优势">6 Key Advantages</h3>
+      <div class="bio-features">
+        <div class="bio-feature">
+          <h4 data-en="Sales Background" data-zh="实战销售背景">Sales Background</h4>
+          <p data-en="Personally managed CNY 200M+ annual revenue team. Understands sales pain points firsthand." data-zh="亲自操盘过年营收 2 亿+ 的销售团队，懂销售、懂管理、懂业务痛点。">Personally managed CNY 200M+ annual revenue team. Understands sales pain points firsthand.</p>
+        </div>
+        <div class="bio-feature">
+          <h4 data-en="Training = ROI" data-zh="培训绩效挂钩">Training = ROI</h4>
+          <p data-en="Transforms cost centers into profit creators. Tiffany project delivered 13-15% performance lift." data-zh="将培训从成本中心转型为利润创造中心，Tiffany 项目实现 13-15% 业绩增长。">Transforms cost centers into profit creators. Tiffany project delivered 13-15% performance lift.</p>
+        </div>
+        <div class="bio-feature">
+          <h4 data-en="Cross-Industry" data-zh="跨行业经验">Cross-Industry</h4>
+          <p data-en="Luxury, hospitality, education, retail, healthcare, engineering, consulting. Rapidly adapts to any sector." data-zh="覆盖奢侈品、酒店、教育、零售、医疗、工程、咨询，快速适配任何行业。">Luxury, hospitality, education, retail, healthcare, engineering, consulting. Rapidly adapts to any sector.</p>
+        </div>
+        <div class="bio-feature">
+          <h4 data-en="Large-Scale Delivery" data-zh="大规模项目交付">Large-Scale Delivery</h4>
+          <p data-en="Led 2,000-person and 3,500-person training rollouts with robust project management." data-zh="曾主导 2,000 人、3,500 人等超大规模培训项目，具备完善的项目管理和交付能力。">Led 2,000-person and 3,500-person training rollouts with robust project management.</p>
+        </div>
+        <div class="bio-feature">
+          <h4 data-en="0-to-1 Builder" data-zh="从 0 到 1 搭建">0-to-1 Builder</h4>
+          <p data-en="Builds sales training systems and corporate universities from scratch with competency frameworks." data-zh="擅长从零构建销售培训体系和企业大学，设计高度契合企业核心素能培训框架。">Builds sales training systems and corporate universities from scratch with competency frameworks.</p>
+        </div>
+        <div class="bio-feature">
+          <h4 data-en="Multilingual" data-zh="多语言多元文化">Multilingual</h4>
+          <p data-en="4 languages, APAC & international experience. Supports bilingual delivery for global teams." data-zh="精通四种语言，具备亚太及国际项目经验，可支持中外团队双语授课。">4 languages, APAC & international experience. Supports bilingual delivery for global teams.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact-section">
+  <h2 data-en="Let's Connect" data-zh="期待与您联系">Let's Connect</h2>
+  <p data-en="Open to regional director and head of L&D opportunities across APAC and globally." data-zh="开放亚太区及全球人才管理总监、L&D 负责人职位机会。">Open to regional director and head of L&D opportunities across APAC and globally.</p>
+  <div class="contact-grid">
+    <div class="contact-item">
+      <div class="contact-icon">✉</div>
+      <a href="mailto:ttcharlesshen@icloud.com">ttcharlesshen@icloud.com</a>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">📱</div>
+      <span>+86 138-1719-7733</span>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">📍</div>
+      <span data-en="Shanghai, China" data-zh="中国上海">Shanghai, China</span>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">in</div>
+      <a href="https://linkedin.com/in/charles-shen-a1a18616" target="_blank" rel="noopener">linkedin.com/in/charles-shen-a1a18616</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Charles SHEN | <span data-en="Updated: August 10, 2026" data-zh="更新日期：2026年8月10日">Updated: August 10, 2026</span></p>
+</footer>
+
+<script>
+  let currentLang = 'en';
+
+  function toggleLang() {
+    currentLang = currentLang === 'en' ? 'zh' : 'en';
+    document.getElementById('langBtn').textContent = currentLang === 'en' ? '中文' : 'EN';
+    document.querySelectorAll('[data-en][data-zh]').forEach(el => {
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        el.placeholder = el.getAttribute('data-' + currentLang);
+      } else {
+        el.textContent = el.getAttribute('data-' + currentLang);
+      }
+    });
+  }
+
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.comp-card, .timeline-item, .bio-feature, .impact-box, .stat-card').forEach(el => {
+    el.classList.add('fade-in');
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
